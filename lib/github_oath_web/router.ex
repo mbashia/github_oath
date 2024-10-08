@@ -8,6 +8,7 @@ defmodule GithubOathWeb.Router do
     plug :put_root_layout, {GithubOathWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug GithubOath.Plugs.SetUser
   end
 
   pipeline :api do
@@ -22,6 +23,7 @@ defmodule GithubOathWeb.Router do
 
   scope "/auth", GithubOathWeb do
     pipe_through :browser
+    get "/signout", AuthController, :signout
 
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback

@@ -12,6 +12,19 @@
     </script>
   </head>
   <body class="bg-white antialiased">
+    <ul>
+      <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+      <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+        <li><%= live_redirect("LiveDashboard", to: Routes.live_dashboard_path(@conn, :home)) %></li>
+      <% end %>
+      <%= if @conn.assigns[:user] do %>
+        <li><%= live_redirect("Logout", to: Routes.auth_path(@conn, :signout)) %></li>
+      <% else %>
+        <li>
+          <%= live_redirect("Sign in with Github", to: Routes.auth_path(@conn, :request, "github")) %>
+        </li>
+      <% end %>
+    </ul>
     <%= @inner_content %>
   </body>
 </html>

@@ -31,6 +31,12 @@ defmodule GithubOathWeb.AuthController do
     |> redirect(to: "/")
   end
 
+  def signout(conn, _params) do
+    conn
+    |> configure_session(drop: true)
+    |> redirect(to: "/")
+  end
+
   defp findOrCreateUser(user_data) do
     changeset = User.changeset(%User{}, user_data)
 
